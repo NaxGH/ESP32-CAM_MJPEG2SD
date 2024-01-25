@@ -339,9 +339,14 @@ float readVoltage() {
 
 static void battTask(void* parameter) {
     if (voltInterval < 1) voltInterval = 1;
+    uint32_t level = 0;
+    int samples = ADC_SAMPLES;
     while (true) {
-        // convert analog reading to corrected voltage.  analogReadMilliVolts() not working
-        currentVoltage = (float)(smoothAnalog(voltPin)) * 3.3 * voltDivider / MAX_ADC;
+        for (int i = 0; i < samples; i++) level += analogReadMilliVolts(voltPin);
+        level /= samples;
+
+        // convert analog reading to corrected voltage.
+        currentVoltage = (float)level * voltDivider / 1000;
 
         static bool sentExtAlert = false;
         if (currentVoltage < voltLow && !sentExtAlert) {
@@ -350,7 +355,7 @@ static void battTask(void* parameter) {
             sprintf(battMsg, "Voltage is %0.2fV", currentVoltage);
             externalAlert("Low battery", battMsg);
         }
-        delay(voltInterval * 60 * 1000);  // mins
+        delay(pdMS_TO_TICKS(voltInterval * 10 * 1000));  // per 10 secs
     }
     vTaskDelete(NULL);
 }
