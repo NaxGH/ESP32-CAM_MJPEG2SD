@@ -83,7 +83,7 @@ CAMERA_MODEL_ESP32S3_CAM_LCD
 
 #define HTTP_CLIENTS 2  // http, ws
 #define MAX_STREAMS 2   // stream, playback, download / NVR
-#define INDEX_PAGE_PATH DATA_DIR "/MJPEG2SD" HTML_EXT
+#define INDEX_PAGE_PATH DATA_DIR "/index" HTML_EXT
 #define FILE_NAME_LEN 64
 #define IN_FILE_NAME_LEN (FILE_NAME_LEN * 2)
 #define JSON_BUFF_LEN (32 * 1024)  // set big enough to hold all file names in a folder
@@ -91,7 +91,7 @@ CAMERA_MODEL_ESP32S3_CAM_LCD
 #if defined(CONFIG_IDF_TARGET_ESP32S3)
 #define FB_BUFFERS 12  // 1 being processed, rest being filled
 #else
-#define FB_BUFFERS 4  // 1 being processed, rest being filled
+#define FB_BUFFERS 6  // 1 being processed, rest being filled
 #endif
 #define MAX_JPEG (ONEMEG / 2)   // UXGA jpeg frame buffer at highest quality 375kB rounded up
 #define MIN_RAM 8               // min object size stored in ram instead of PSRAM default is 4096
@@ -126,11 +126,11 @@ CAMERA_MODEL_ESP32S3_CAM_LCD
 #define SRT_EXT "srt"
 #define AVI_HEADER_LEN 310  // AVI header length
 #define CHUNK_HDR 8         // bytes per jpeg hdr in AVI
-#define WAVTEMP "/current.wav"
-#define AVITEMP "/current.avi"
-#define TLTEMP "/current.tl"
-#define TELETEMP "/current.csv"
-#define SRTTEMP "/current.srt"
+#define WAVTEMP DATA_DIR "/current.wav"
+#define AVITEMP DATA_DIR "/current.avi"
+#define TLTEMP DATA_DIR "/current.tl"
+#define TELETEMP DATA_DIR "/current.csv"
+#define SRTTEMP DATA_DIR "/current.srt"
 
 // non default pins configured for SD card on given camera board
 #if defined(CAMERA_MODEL_ESP32S3_EYE) || defined(CAMERA_MODEL_FREENOVE_ESP32S3_CAM)
